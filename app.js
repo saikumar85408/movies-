@@ -59,4 +59,13 @@ app.post("/movies/", async (requst, response) => {
   const dbResponse = await db.run(addMovieQuery);
   response.send("Movie Successfully Added");
 });
+
+app.get("/movies/:movieId/", async (request, response) => {
+  const { movieId } = request.params;
+  const query = `
+    SELECT * FROM movie WHERE movie_id is ${movieId}`;
+  const movie = await db.get(query);
+  response.send(movie);
+});
+
 module.exports = app;
